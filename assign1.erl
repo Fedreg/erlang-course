@@ -1,5 +1,5 @@
 -module(assign1).
--export([perimeter/1, area/1, side3/2, enclose/1]).
+-export([perimeter/1, area/1, side3/2, enclose/1, bits/1, bitsTR/1]).
 -import(math, [pow/2, sqrt/1]).
 
 side3(A,B) ->
@@ -28,7 +28,26 @@ enclose({square, S}) ->
 enclose({triangle, A, B}) ->
     Triangle_area = area({triangle, A, B}),
     Triangle_height = Triangle_area/2,
-    {rectangle, Triangle_height, (Triangle_area/Triangle_height)/2};
+    {rectangle, Triangle_height, ((Triangle_area * 2)/Triangle_height)};
 enclose({rectangle, L,W}) ->
     {rectangle, L, W}.
+
+
+% Direct recursion.
+bits(0) ->
+    0;
+bits(N) ->
+    (N rem 2) + bits(N div 2).
+
+
+%w W/ tail recursion.
+bitsTR(0, Sum) ->
+    Sum;
+bitsTR(N, Sum) ->
+    bitsTR(N div 2, Sum + (N rem 2)).
+
+bitsTR(N) ->
+    bitsTR(N,0).
+
+
 
